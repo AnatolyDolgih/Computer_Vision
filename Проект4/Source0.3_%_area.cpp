@@ -106,7 +106,7 @@ float S(float X0, float Y0, float X1, float Y1, float X2, float Y2, float X3, fl
 		float S_annot = (X[1] - X[0])*(Y[0] - Y[1]);
 		if (X[0] >= X[3] || X[2] >= X[1] || Y[3] >= Y[0] || Y[1] >= Y[2])//значит не пересекаются
 		{
-			return 0;
+			return -1;
 		}
 		else
 		{//Если пересекаются - тогда найдем площадь
