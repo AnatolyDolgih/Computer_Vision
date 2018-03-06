@@ -1,0 +1,2 @@
+eps;step;neigh;TP;FP;TN;DB;summ_of_img;summ_of_faces;summ_of_frames;time/img(ms)
+0,500000;1,200000;2;362;7;123;30;290;515;375;361

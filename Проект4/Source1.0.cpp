@@ -7,14 +7,14 @@
 using namespace std;
 const int 
 num_of_files = 1, //кол-во файлов дл€ подсчета от 1 до 10;
-num_of_steps = 2, // кол-во шагов
-num_of_neigh = 2, // кол-во соседей
-area = 0; // площадь пересечени€ в %, больше которой считать TP++
+num_of_steps = 1, // кол-во шагов
+num_of_neigh = 1, // кол-во соседей
+area = 49; // площадь пересечени€ в %, больше которой считать TP++
 int main()
 {
 	fstream results_of_find;
-	double step[num_of_steps] = { 1.2, 1.3 };
-	int neigh[num_of_neigh] = { 1 , 2 };
+	double step[num_of_steps] = { 1.2 };
+	int neigh[num_of_neigh] = { 2 };
 	//входные параметры
 	const char* ch[1];
 	ch[0] = "C:/Users/Denis D/Documents/Visual Studio 2017/Projects/ћои–аботы/CV/x64/Debug/ѕроект4.exe;";
