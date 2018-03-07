@@ -169,7 +169,11 @@ int main(int argc, const char* argv[])
 								else
 								{
 									if (counter == 1) TP++;
-									else DB++;
+									else 
+									{
+										TP++; 
+										DB += counter - 1;
+									}
 								}
 							}
 						}
