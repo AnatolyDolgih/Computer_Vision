@@ -10,26 +10,23 @@
 using namespace std;
 using namespace cv;
 
-/** Function Headers */
-vector<Rect> find_frames(Mat, double, int);
-
 /** Global variables */
 String face_cascade_name;
 CascadeClassifier face_cascade;
 const int
 num_of_files = 1, //кол-во файлов для подсчета от 1 до 10;
-num_of_steps = 2, // кол-во шагов
-num_of_neigh = 2; // кол-во соседей
+num_of_steps = 1, // кол-во шагов
+num_of_neigh = 1; // кол-во соседей
 const float 
-eps1=0.5, 
-eps2=0.5,
-eps3=0.5,
-eps4=0.5;
+eps1=0.99, 
+eps2=0.99,
+eps3=0.99,
+eps4=0.99;
 // счетчики
 int summ_of_img, summ_of_all_faces, summ_of_all_frames, TP, TN, FP, DB, time_;
 //
-const double step[num_of_steps] = { 1.2,1.3 };
-const int neigh[num_of_neigh] = { 2, 3 };
+const double step[num_of_steps] = { 1.2 };
+const int neigh[num_of_neigh] = { 2 };
 fstream res;
 /** @function main */
 int main(int argc, const char* argv[])
@@ -72,7 +69,6 @@ int main(int argc, const char* argv[])
 					vector<Rect> frames, faces;
 					Mat image;
 					image = imread("C:/Users/Denis D/Desktop/С++/БДфото/" + str + ".jpg", IMREAD_COLOR);
-
 					//проверка на пустоту
 					if (image.empty())
 					{
@@ -80,12 +76,17 @@ int main(int argc, const char* argv[])
 						cerr << -1;
 					}
 
+					Mat image_gray;
+					cvtColor(image, image_gray, COLOR_BGR2GRAY);
+					//equalizeHist(frame_gray, frame_gray); // эквилизация
+
 					// забиваем координаты рамок
 					unsigned int start_time = clock();
-					frames = find_frames(image, step[p], neigh[l]);
+					face_cascade.detectMultiScale(image_gray, frames, step[p], neigh[l], 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 					unsigned int end_time = clock();
 					time_ += end_time - start_time;
 					summ_of_all_frames += frames.size();
+
 					// забиваем координаты аннотированных лиц
 					getline(read1, str);
 					int num = atoi(str.c_str());
@@ -189,18 +190,5 @@ int main(int argc, const char* argv[])
 			res.close();
 		}
 	}
-	
 	return 0;
-}
-
-/** @function detectAndDisplay */
-vector<Rect> find_frames(Mat image, double step, int neigh)
-{
-	vector<Rect> frames1; // хранит координаты найденных рамок
-	Mat image_gray;
-	cvtColor(image, image_gray, COLOR_BGR2GRAY);
-	//equalizeHist(frame_gray, frame_gray); // эквилизация
-	//-- Detect faces
-	face_cascade.detectMultiScale(image_gray, frames1, step, neigh, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-	return frames1;
 }
