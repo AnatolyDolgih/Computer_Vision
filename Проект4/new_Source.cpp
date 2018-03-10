@@ -18,10 +18,10 @@ num_of_files = 1, //кол-во файлов для подсчета от 1 до 10;
 num_of_steps = 1, // кол-во шагов
 num_of_neigh = 1; // кол-во соседей
 const float 
-eps1=0.99, 
-eps2=0.99,
-eps3=0.99,
-eps4=0.99;
+eps1=0, 
+eps2=0,
+eps3=0,
+eps4=0;
 // счетчики
 int summ_of_img, summ_of_all_faces, summ_of_all_frames, TP, TN, FP, DB, time_;
 //
@@ -94,21 +94,21 @@ int main(int argc, const char* argv[])
 					for (int j = 0; j < num; j++)
 					{
 						Rect rec;
-						double R1, R2, X, Y; //R1 - радиус длины лица(по y), R2 - радиус ширины лица(по х), х,у - коорд. центра прямоуг.
+						int R1, R2, X, Y; //R1 - радиус длины лица(по y), R2 - радиус ширины лица(по х), х,у - коорд. центра прямоуг.
 
 						getline(read1, str, ' ');
-						R1 = atof(str.c_str());
+						R1 = atoi(str.c_str());
 
 						getline(read1, str, ' ');
-						R2 = atof(str.c_str());
+						R2 = atoi(str.c_str());
 
 						getline(read1, str, ' ');
 
 						getline(read1, str, ' ');
-						X = atof(str.c_str());
+						X = atoi(str.c_str());
 
 						getline(read1, str, ' ');
-						Y = atof(str.c_str());
+						Y = atoi(str.c_str());
 
 						rec.x = X - R2;
 						rec.y = Y - R1;
@@ -128,10 +128,10 @@ int main(int argc, const char* argv[])
 						for (int k = 0; k < frames.size(); k++)
 						{
 							matrix[j][k] =
-								((abs(faces[j].x - frames[k].x) / max(abs(faces[j].width), abs(frames[k].width))) < eps1) &&
-								((abs(faces[j].y - frames[k].y) / max(abs(faces[j].height), abs(frames[k].height))) < eps2) &&
-								((abs(faces[j].x + faces[j].width - frames[k].x - frames[k].width) / max(abs(faces[j].width), abs(frames[k].width))) < eps3) &&
-								((abs(faces[j].y + faces[j].height - frames[k].y - frames[k].height) / max(abs(faces[j].height), abs(frames[k].height))) < eps4);
+								((static_cast<float>(abs(faces[j].x - frames[k].x))) / static_cast<float>(max(faces[j].width, frames[k].width)) <= eps1) &&
+								((static_cast<float>(abs(faces[j].y - frames[k].y))) / static_cast<float>(max(faces[j].height, frames[k].height)) <= eps2) &&
+								((static_cast<float>(abs(faces[j].x + faces[j].width - frames[k].x - frames[k].width))) / static_cast<float>(max(faces[j].width, frames[k].width)) <= eps3) &&
+								((static_cast<float>(abs(faces[j].y + faces[j].height - frames[k].y - frames[k].height))) / static_cast<float>(max(faces[j].height, frames[k].height)) <= eps4);
 						}
 					}
 					// алгоритм анализа
